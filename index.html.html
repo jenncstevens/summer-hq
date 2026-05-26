@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #F5A623;
+    --sky: #4A90D9;
+    --grass: #5CB85C;
+    --coral: #E8604C;
+    --cream: #FDF8F0;
+    --dark: #1A1A2E;
+    --card-bg: #FFFFFF;
+    --shadow: 0 4px 24px rgba(26,26,46,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    padding: 28px 32px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '☀️';
+    font-size: 80px;
+    position: absolute;
+    right: 180px;
+    top: -10px;
+    animation: spin 20s linear infinite;
+    opacity: 0.18;
+  }
+  .header::after {
+    content: '🌊';
+    font-size: 60px;
+    position: absolute;
+    right: 40px;
+    bottom: -10px;
+    animation: bob 3s ease-in-out infinite;
+    opacity: 0.18;
+  }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  .header-left h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--sun);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .header-left p {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .date-badge {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 10px 18px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .date-badge span {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--sun);
+    line-height: 1;
+  }
+
+  /* SCREEN UNLOCK BANNER */
+  .unlock-banner {
+    margin: 20px 32px 0;
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+    border: 2px solid var(--sun);
+    border-radius: 16px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.15);
+  }
+  .unlock-banner .lock-icon { font-size: 1.8rem; }
+  .unlock-banner p {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .unlock-banner strong { color: var(--sun); }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    padding: 24px 32px 0;
+  }
+  .tab {
+    padding: 10px 24px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    background: rgba(26,26,46,0.06);
+    color: var(--dark);
+    opacity: 0.5;
+  }
+  .tab.active { opacity: 1; color: white; }
+  .tab[data-kid="claire"].active { background: #E8604C; }
+  .tab[data-kid="charlie"].active { background: #4A90D9; }
+  .tab[data-kid="jeffrey"].active { background: #5CB85C; }
+  .tab:hover:not(.active) { opacity: 0.75; }
+
+  /* PANELS */
+  .panel { display: none; padding: 24px 32px; }
+  .panel.active { display: block; }
+
+  /* KID HEADER */
+  .kid-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .kid-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--dark);
+  }
+  .kid-info p { color: #888; font-size: 0.85rem; font-weight: 500; margin-top: 2px; }
+
+  .earnings-box {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 14px 22px;
+    text-align: right;
+  }
+  .earnings-box .label { color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .earnings-box .amount {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--sun);
+    line-height: 1.1;
+  }
+  .earnings-box .max { color: rgba(255,255,255,0.35); font-size: 0.75rem; }
+
+  /* PROGRESS BAR */
+  .week-progress {
+    background: white;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .week-progress .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .week-progress .top span { font-size: 0.8rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+  .week-progress .top strong { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--dark); }
+  .bar-track {
+    height: 10px;
+    background: #F0EDE8;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .bar-fill.claire { background: linear-gradient(90deg, #E8604C, #F5A623); }
+  .bar-fill.charlie { background: linear-gradient(90deg, #4A90D9, #7B68EE); }
+  .bar-fill.jeffrey { background: linear-gradient(90deg, #5CB85C, #4A90D9); }
+
+  /* SECTION */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 20px 0 10px;
+  }
+  .section-title .emoji { font-size: 1.2rem; }
+  .section-title .freq-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .freq-badge.daily { background: #FFF3CD; color: #856404; }
+  .freq-badge.weekly { background: #D1ECF1; color: #0C5460; }
+
+  /* TASK CARDS */
+  .tasks { display: flex; flex-direction: column; gap: 8px; }
+  .task-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 2px solid transparent;
+    user-select: none;
+  }
+  .task-card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,26,46,0.10); }
+  .task-card.done {
+    opacity: 0.55;
+    background: #F8F8F8;
+  }
+  .task-card.done .task-name { text-decoration: line-through; color: #aaa; }
+
+  .check-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2.5px solid #DDD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+  .task-card.done .check-circle {
+    background: #5CB85C;
+    border-color: #5CB85C;
+    color: white;
+  }
+  .check-circle::after { content: ''; }
+  .task-card.done .check-circle::after { content: '✓'; }
+
+  .task-info { flex: 1; }
+  .task-name { font-weight: 600; font-size: 0.95rem; color: var(--dark); }
+  .task-desc { font-size: 0.78rem; color: #999; margin-top: 2px; }
+
+  .points-pill {
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #F5F0E8;
+    color: #8B6914;
+    white-space: nowrap;
+  }
+  .task-card.done .points-pill { background: #E8F5E9; color: #2E7D32; }
+
+  /* BOOK LOG */
+  .book-section { margin-top: 4px; }
+  .book-log {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+  }
+  .book-log .book-entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #F5F0E8;
+  }
+  .book-log .book-entry:last-child { border-bottom: none; padding-bottom: 0; }
+  .book-log .book-entry input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background: transparent;
+    font-weight: 500;
+  }
+  .book-log .book-entry input::placeholder { color: #CCC; }
+  .book-entry .book-done-btn {
+    background: none;
+    border: 2px solid #DDD;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .book-entry .book-done-btn:hover { border-color: #5CB85C; color: #5CB85C; }
+  .book-entry.finished .book-done-btn { background: #5CB85C; border-color: #5CB85C; color: white; }
+  .book-entry.finished input { text-decoration: line-through; color: #aaa; }
+  .book-bonus { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; font-weight: 600; color: #5CB85C; margin-left: auto; }
+
+  .add-book-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 2px dashed #DDD;
+    border-radius: 10px;
+    padding: 10px 14px;
+    width: 100%;
+    margin-top: 8px;
+    cursor: pointer;
+    color: #BBB;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .add-book-btn:hover { border-color: var(--sun); color: var(--sun); }
+
+  /* WORKOUT BUILDER */
+  .workout-builder {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+  }
+  .exercise-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #F5F0E8;
+  }
+  .exercise-row:last-child { border-bottom: none; }
+  .exercise-row .ex-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .exercise-row input[type="number"] {
+    width: 52px;
+    border: 1.5px solid #EEE;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    color: var(--dark);
+    outline: none;
+  }
+  .exercise-row input[type="number"]:focus { border-color: var(--sky); }
+  .exercise-row .unit { font-size: 0.75rem; color: #AAA; font-weight: 500; }
+  .ex-done-check {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 2px solid #DDD;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .ex-done-check.checked { background: #5CB85C; border-color: #5CB85C; color: white; }
+  .ex-done-check.checked::after { content: '✓'; }
+
+  /* RESET */
+  .reset-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding: 14px 20px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+  .reset-bar p { font-size: 0.8rem; color: #AAA; font-weight: 500; }
+  .reset-btn {
+    background: none;
+    border: 1.5px solid #EEE;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+  @media (max-width: 600px) {
+    .header { padding: 20px 16px 16px; }
+    .header-left h1 { font-size: 1.6rem; }
+    .tabs { padding: 16px 16px 0; gap: 6px; }
+    .tab { padding: 8px 16px; font-size: 0.82rem; }
+    .panel { padding: 16px 16px; }
+    .unlock-banner { margin: 14px 16px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>☀️ Summer HQ</h1>
+    <p>Get it done · Earn your day</p>
+  </div>
+  <div class="date-badge" id="dateBadge">
+    <span id="dayName">—</span>
+    <div id="dateStr" style="font-size:0.75rem;opacity:0.6;margin-top:2px;"></div>
+  </div>
+</div>
+
+<div class="unlock-banner">
+  <div class="lock-icon">📵</div>
+  <p><strong>No screens</strong> until all daily tasks are checked off. Finish everything to unlock your day!</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-kid="claire" onclick="showKid('claire')">🎀 Claire <small style="opacity:0.6;font-size:0.75rem;">10</small></button>
+  <button class="tab" data-kid="charlie" onclick="showKid('charlie')">⚽ Charlie <small style="opacity:0.6;font-size:0.75rem;">13</small></button>
+  <button class="tab" data-kid="jeffrey" onclick="showKid('jeffrey')">🏀 Jeffrey <small style="opacity:0.6;font-size:0.75rem;">15</small></button>
+</div>
+
+<!-- ═══════════════════ CLAIRE ═══════════════════ -->
+<div class="panel active" id="panel-claire">
+  <div class="kid-header">
+    <div class="kid-info">
+      <h2>Claire</h2>
+      <p>Age 10 · Points this week: <strong id="claire-pts">0</strong> / 200</p>
+    </div>
+    <div class="earnings-box">
+      <div class="label">Earned</div>
+      <div class="amount" id="claire-earned">$0.00</div>
+      <div class="max">+ book bonuses</div>
+    </div>
+  </div>
+
+  <div class="week-progress">
+    <div class="top">
+      <span>Weekly Progress</span>
+      <strong id="claire-pct">0%</strong>
+    </div>
+    <div class="bar-track"><div class="bar-fill claire" id="claire-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- CHORES -->
+  <div class="section-title"><span class="emoji">🧹</span> Chores <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks" id="claire-chores">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Make bed</div><div class="task-desc">Sheets tucked, pillows arranged</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Clear & wipe dinner table</div><div class="task-desc">After each meal</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Tidy bedroom</div><div class="task-desc">Clothes away, floor clear</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'claire', 12)" data-pts="12">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">🎹 Practice piano</div><div class="task-desc">15 minutes — scales, songs, or both</div></div>
+      <div class="points-pill">12 pts</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🧹</span> Bigger Chores <span class="freq-badge weekly">Weekly</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 20)" data-pts="20">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Vacuum living room</div><div class="task-desc">Move small items, get corners</div></div>
+      <div class="points-pill">20 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'claire', 20)" data-pts="20">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Wipe bathroom sink & mirror</div><div class="task-desc">Use cleaning spray</div></div>
+      <div class="points-pill">20 pts</div>
+    </div>
+  </div>
+
+  <!-- READING -->
+  <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 15)" data-pts="15">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
+      <div class="points-pill">15 pts</div>
+    </div>
+  </div>
+  <div class="book-section">
+    <div class="book-log" id="claire-books">
+      <div class="book-entry" data-finished="false">
+        <span>📖</span>
+        <input type="text" placeholder="Book title…" />
+        <button class="book-done-btn" onclick="finishBook(this, 'claire')">Finished! +$20</button>
+      </div>
+    </div>
+    <button class="add-book-btn" onclick="addBookEntry('claire')">＋ Add a book</button>
+  </div>
+
+  <!-- WORKOUT -->
+  <div class="section-title"><span class="emoji">💪</span> Workout <span class="freq-badge daily">Daily</span></div>
+  <div class="workout-builder">
+    <div class="exercise-row">
+      <div class="ex-name">🏊 Swim <em style="font-size:0.75rem;color:#AAA;font-weight:400;">or</em> 🏃 Run</div>
+      <input type="number" value="20" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 15)" data-pts="15"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">⚽ Dribbling Drills</div>
+      <input type="number" value="10" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">⚽ Passing / Wall Ball</div>
+      <input type="number" value="10" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">⚽ Shooting Practice</div>
+      <input type="number" value="10" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+    </div>
+  </div>
+
+  <!-- OUTSIDE -->
+  <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Play, explore, get some sun ☀️</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <p>Daily tasks reset each morning · Weekly tasks reset Sunday</p>
+    <button class="reset-btn" onclick="resetKid('claire')">Reset Claire's Day</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHARLIE ═══════════════════ -->
+<div class="panel" id="panel-charlie">
+  <div class="kid-header">
+    <div class="kid-info">
+      <h2>Charlie</h2>
+      <p>Age 13 · Points this week: <strong id="charlie-pts">0</strong> / 200</p>
+    </div>
+    <div class="earnings-box">
+      <div class="label">Earned</div>
+      <div class="amount" id="charlie-earned">$0.00</div>
+      <div class="max">+ book bonuses</div>
+    </div>
+  </div>
+
+  <div class="week-progress">
+    <div class="top">
+      <span>Weekly Progress</span>
+      <strong id="charlie-pct">0%</strong>
+    </div>
+    <div class="bar-track"><div class="bar-fill charlie" id="charlie-bar" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🧹</span> Chores <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Make bed</div><div class="task-desc">Neat and tidy every morning</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 12)" data-pts="12">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Load / unload dishwasher</div><div class="task-desc">After meals as needed</div></div>
+      <div class="points-pill">12 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Tidy bedroom</div><div class="task-desc">Floor clear, desk organized</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🧹</span> Bigger Chores <span class="freq-badge weekly">Weekly</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 22)" data-pts="22">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Mow lawn / yard work</div><div class="task-desc">Or sweep driveway/patio</div></div>
+      <div class="points-pill">22 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 18)" data-pts="18">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Wash & fold towels</div><div class="task-desc">Wash, dry, and put away</div></div>
+      <div class="points-pill">18 pts</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 15)" data-pts="15">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
+      <div class="points-pill">15 pts</div>
+    </div>
+  </div>
+  <div class="book-section">
+    <div class="book-log" id="charlie-books">
+      <div class="book-entry" data-finished="false">
+        <span>📖</span>
+        <input type="text" placeholder="Book title…" />
+        <button class="book-done-btn" onclick="finishBook(this, 'charlie')">Finished! +$20</button>
+      </div>
+    </div>
+    <button class="add-book-btn" onclick="addBookEntry('charlie')">＋ Add a book</button>
+  </div>
+
+  <div class="section-title"><span class="emoji">💪</span> Workout <span class="freq-badge daily">Daily</span></div>
+  <div class="workout-builder">
+    <div class="exercise-row" style="flex-wrap:wrap;gap:6px;">
+      <div class="ex-name" style="width:100%;margin-bottom:4px;">🏃 Running <span style="font-size:0.75rem;color:#AAA;font-weight:400;">(pick today's type)</span></div>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="charlie-run" value="speed" onchange="charlieRunType(this)"> ⚡ Speed Work</label>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="charlie-run" value="long" onchange="charlieRunType(this)"> 🛣️ Long Run</label>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="charlie-run" value="recovery" onchange="charlieRunType(this)"> 🌿 Recovery Run</label>
+      <div style="width:100%;display:flex;align-items:center;gap:8px;margin-top:6px;">
+        <span id="charlie-run-label" style="flex:1;font-size:0.82rem;color:#AAA;font-style:italic;">Select run type above</span>
+        <input type="number" id="charlie-run-mins" value="30" min="0" style="width:52px;border:1.5px solid #EEE;border-radius:8px;padding:4px 8px;font-size:0.85rem;font-family:'DM Sans',sans-serif;font-weight:600;text-align:center;color:#1A1A2E;outline:none;" /> <span class="unit">min</span>
+        <div class="ex-done-check" onclick="toggleEx(this, 'charlie', 18)" data-pts="18"></div>
+      </div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">🏋️ CrossFit WOD</div>
+      <input type="number" value="45" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'charlie', 18)" data-pts="18"></div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Fresh air, sunshine, move around ☀️</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <p>Daily tasks reset each morning · Weekly tasks reset Sunday</p>
+    <button class="reset-btn" onclick="resetKid('charlie')">Reset Charlie's Day</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ JEFFREY ═══════════════════ -->
+<div class="panel" id="panel-jeffrey">
+  <div class="kid-header">
+    <div class="kid-info">
+      <h2>Jeffrey</h2>
+      <p>Age 15 · Points this week: <strong id="jeffrey-pts">0</strong> / 200</p>
+    </div>
+    <div class="earnings-box">
+      <div class="label">Earned</div>
+      <div class="amount" id="jeffrey-earned">$0.00</div>
+      <div class="max">+ book bonuses</div>
+    </div>
+  </div>
+
+  <div class="week-progress">
+    <div class="top">
+      <span>Weekly Progress</span>
+      <strong id="jeffrey-pct">0%</strong>
+    </div>
+    <div class="bar-track"><div class="bar-fill jeffrey" id="jeffrey-bar" style="width:0%"></div></div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🧹</span> Chores <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Make bed</div><div class="task-desc">Neat every morning</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Tidy bedroom & common areas</div><div class="task-desc">Your space + shared spaces</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Pick up basement</div><div class="task-desc">Straighten up, put things away</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🧹</span> Bigger Chores <span class="freq-badge weekly">Weekly</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 22)" data-pts="22">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Take out trash & recycling</div><div class="task-desc">All bins, replace liners</div></div>
+      <div class="points-pill">22 pts</div>
+    </div>
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 25)" data-pts="25">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Deep clean bathroom</div><div class="task-desc">Toilet, sink, mirror, floor</div></div>
+      <div class="points-pill">25 pts</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 15)" data-pts="15">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
+      <div class="points-pill">15 pts</div>
+    </div>
+  </div>
+  <div class="book-section">
+    <div class="book-log" id="jeffrey-books">
+      <div class="book-entry" data-finished="false">
+        <span>📖</span>
+        <input type="text" placeholder="Book title…" />
+        <button class="book-done-btn" onclick="finishBook(this, 'jeffrey')">Finished! +$20</button>
+      </div>
+    </div>
+    <button class="add-book-btn" onclick="addBookEntry('jeffrey')">＋ Add a book</button>
+  </div>
+
+  <div class="section-title"><span class="emoji">💪</span> Workout <span class="freq-badge daily">Daily</span></div>
+  <div class="workout-builder">
+    <div class="exercise-row" style="flex-wrap:wrap;gap:6px;">
+      <div class="ex-name" style="width:100%;margin-bottom:4px;">🏃 Running <span style="font-size:0.75rem;color:#AAA;font-weight:400;">(3x/week — pick today's type)</span></div>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="jeffrey-run" value="long" onchange="jeffreyRunType(this)"> 🛣️ Long Run</label>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="jeffrey-run" value="speed" onchange="jeffreyRunType(this)"> ⚡ Speed Work</label>
+      <label style="font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="jeffrey-run" value="rest" onchange="jeffreyRunType(this)"> 🚫 Rest Day</label>
+      <div style="width:100%;display:flex;align-items:center;gap:8px;margin-top:6px;">
+        <span id="jeffrey-run-label" style="flex:1;font-size:0.82rem;color:#AAA;font-style:italic;">Select run type above</span>
+        <input type="number" id="jeffrey-run-mins" value="40" min="0" style="width:52px;border:1.5px solid #EEE;border-radius:8px;padding:4px 8px;font-size:0.85rem;font-family:'DM Sans',sans-serif;font-weight:600;text-align:center;color:#1A1A2E;outline:none;" /> <span class="unit">min</span>
+        <div class="ex-done-check" id="jeffrey-run-check" onclick="toggleEx(this, 'jeffrey', 18)" data-pts="18"></div>
+      </div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">🏋️ CrossFit WOD</div>
+      <input type="number" value="45" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 18)" data-pts="18"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">🏀 Shoot Hoops</div>
+      <input type="number" value="20" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">⚾ Pitching Work</div>
+      <input type="number" value="20" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+    </div>
+    <div class="exercise-row">
+      <div class="ex-name">⚾ Hitting / Tee Work</div>
+      <input type="number" value="20" min="0" /> <span class="unit">min</span>
+      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
+  <div class="tasks">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 10)" data-pts="10">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Intentional time away from screens ☀️</div></div>
+      <div class="points-pill">10 pts</div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <p>Daily tasks reset each morning · Weekly tasks reset Sunday</p>
+    <button class="reset-btn" onclick="resetKid('jeffrey')">Reset Jeffrey's Day</button>
+  </div>
+</div>
+
+<script>
+  // Points totals per kid
+  const pts = { claire: 0, charlie: 0, jeffrey: 0 };
+  const MAX_PTS = 200;
+  const DOLLAR_PER_PT = 20 / MAX_PTS; // $20 per 200 pts
+
+  function updateStats(kid) {
+    const p = pts[kid];
+    document.getElementById(kid + '-pts').textContent = p;
+    const pct = Math.min(100, Math.round(p / MAX_PTS * 100));
+    document.getElementById(kid + '-pct').textContent = pct + '%';
+    document.getElementById(kid + '-bar').style.width = pct + '%';
+    const dollars = (p * DOLLAR_PER_PT).toFixed(2);
+    document.getElementById(kid + '-earned').textContent = '$' + dollars;
+  }
+
+  function toggleTask(el, kid, pointVal) {
+    const wasDone = el.classList.contains('done');
+    el.classList.toggle('done');
+    pts[kid] += wasDone ? -pointVal : pointVal;
+    if (pts[kid] < 0) pts[kid] = 0;
+    updateStats(kid);
+  }
+
+  function toggleEx(el, kid, pointVal) {
+    const wasDone = el.classList.contains('checked');
+    el.classList.toggle('checked');
+    pts[kid] += wasDone ? -pointVal : pointVal;
+    if (pts[kid] < 0) pts[kid] = 0;
+    updateStats(kid);
+  }
+
+  function finishBook(btn, kid) {
+    const entry = btn.closest('.book-entry');
+    const input = entry.querySelector('input');
+    if (!input.value.trim()) { input.focus(); input.placeholder = 'Enter book title first!'; return; }
+    if (entry.dataset.finished === 'true') return;
+    entry.dataset.finished = 'true';
+    entry.classList.add('finished');
+    btn.textContent = '✓ +$20 earned!';
+    // Book bonus is separate from points
+    const bonusEl = document.createElement('span');
+    bonusEl.className = 'book-bonus';
+    bonusEl.textContent = '+$20 📗';
+    entry.appendChild(bonusEl);
+  }
+
+  function addBookEntry(kid) {
+    const log = document.getElementById(kid + '-books');
+    const entry = document.createElement('div');
+    entry.className = 'book-entry';
+    entry.dataset.finished = 'false';
+    entry.innerHTML = `<span>📖</span><input type="text" placeholder="Book title…" /><button class="book-done-btn" onclick="finishBook(this, '${kid}')">Finished! +$20</button>`;
+    log.appendChild(entry);
+  }
+
+  function showKid(kid) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + kid).classList.add('active');
+    document.querySelector('.tab[data-kid="' + kid + '"]').classList.add('active');
+  }
+
+  function resetKid(kid) {
+    if (!confirm('Reset all of ' + kid.charAt(0).toUpperCase() + kid.slice(1) + "'s daily tasks?")) return;
+    const panel = document.getElementById('panel-' + kid);
+    panel.querySelectorAll('.task-card.done').forEach(c => {
+      c.classList.remove('done');
+    });
+    panel.querySelectorAll('.ex-done-check.checked').forEach(c => {
+      c.classList.remove('checked');
+    });
+    pts[kid] = 0;
+    updateStats(kid);
+  }
+
+  // Run type selectors
+  function charlieRunType(radio) {
+    const labels = { speed: '⚡ Speed Work — intervals, strides', long: '🛣️ Long Run — steady pace', recovery: '🌿 Recovery — easy, conversational pace' };
+    document.getElementById('charlie-run-label').textContent = labels[radio.value] || '';
+    const mins = { speed: 30, long: 50, recovery: 30 };
+    document.getElementById('charlie-run-mins').value = mins[radio.value];
+  }
+  function jeffreyRunType(radio) {
+    const labels = { long: '🛣️ Long Run — steady pace', speed: '⚡ Speed Work — intervals, tempo', rest: '🚫 Rest Day — skip the run today' };
+    document.getElementById('jeffrey-run-label').textContent = labels[radio.value] || '';
+    const mins = { long: 50, speed: 35, rest: 0 };
+    document.getElementById('jeffrey-run-mins').value = mins[radio.value];
+    document.getElementById('jeffrey-run-check').style.opacity = radio.value === 'rest' ? '0.3' : '1';
+  }
+
+  // Date display
+  (function() {
+    const now = new Date();
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('dayName').textContent = days[now.getDay()];
+    document.getElementById('dateStr').textContent = months[now.getMonth()] + ' ' + now.getDate();
+  })();
+</script>
+</body>
+</html>
