@@ -459,7 +459,7 @@
   <div class="kid-header">
     <div class="kid-info">
       <h2>Claire</h2>
-      <p>Age 10 · Points this week: <strong id="claire-pts">0</strong> / 200</p>
+      <p>Age 10 · Points today: <strong id="claire-pts">0</strong> / 100</p>
     </div>
     <div class="earnings-box">
       <div class="label">Earned</div>
@@ -486,7 +486,7 @@
     </div>
     <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
       <div class="check-circle"></div>
-      <div class="task-info"><div class="task-name">Clear & wipe dinner table</div><div class="task-desc">After each meal</div></div>
+      <div class="task-info"><div class="task-name">Wipe kitchen counters after dinner</div><div class="task-desc">Wipe down all counters after meals</div></div>
       <div class="points-pill">10 pts</div>
     </div>
     <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
@@ -508,20 +508,16 @@
       <div class="task-info"><div class="task-name">Vacuum living room</div><div class="task-desc">Move small items, get corners</div></div>
       <div class="points-pill">20 pts</div>
     </div>
-    <div class="task-card" onclick="toggleTask(this, 'claire', 20)" data-pts="20">
-      <div class="check-circle"></div>
-      <div class="task-info"><div class="task-name">Wipe bathroom sink & mirror</div><div class="task-desc">Use cleaning spray</div></div>
-      <div class="points-pill">20 pts</div>
-    </div>
+
   </div>
 
   <!-- READING -->
   <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'claire', 15)" data-pts="15">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
-      <div class="points-pill">15 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
   <div class="book-section">
@@ -541,32 +537,32 @@
     <div class="exercise-row">
       <div class="ex-name">🏊 Swim <em style="font-size:0.75rem;color:#AAA;font-weight:400;">or</em> 🏃 Run</div>
       <input type="number" value="20" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 15)" data-pts="15"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'claire', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">⚽ Dribbling Drills</div>
       <input type="number" value="10" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'claire', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">⚽ Passing / Wall Ball</div>
       <input type="number" value="10" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'claire', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">⚽ Shooting Practice</div>
       <input type="number" value="10" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'claire', 12)" data-pts="12"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'claire', 0)"></div>
     </div>
   </div>
 
   <!-- OUTSIDE -->
   <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'claire', 10)" data-pts="10">
+    <div class="task-card" onclick="toggleTask(this, 'claire', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Play, explore, get some sun ☀️</div></div>
-      <div class="points-pill">10 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
 
@@ -581,7 +577,7 @@
   <div class="kid-header">
     <div class="kid-info">
       <h2>Charlie</h2>
-      <p>Age 13 · Points this week: <strong id="charlie-pts">0</strong> / 200</p>
+      <p>Age 13 · Points today: <strong id="charlie-pts">0</strong> / 100</p>
     </div>
     <div class="earnings-box">
       <div class="label">Earned</div>
@@ -607,7 +603,7 @@
     </div>
     <div class="task-card" onclick="toggleTask(this, 'charlie', 12)" data-pts="12">
       <div class="check-circle"></div>
-      <div class="task-info"><div class="task-name">Load / unload dishwasher</div><div class="task-desc">After meals as needed</div></div>
+      <div class="task-info"><div class="task-name">Unload dishwasher</div><div class="task-desc">After meals as needed</div></div>
       <div class="points-pill">12 pts</div>
     </div>
     <div class="task-card" onclick="toggleTask(this, 'charlie', 10)" data-pts="10">
@@ -619,24 +615,25 @@
 
   <div class="section-title"><span class="emoji">🧹</span> Bigger Chores <span class="freq-badge weekly">Weekly</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'charlie', 22)" data-pts="22">
-      <div class="check-circle"></div>
-      <div class="task-info"><div class="task-name">Mow lawn / yard work</div><div class="task-desc">Or sweep driveway/patio</div></div>
-      <div class="points-pill">22 pts</div>
-    </div>
+
     <div class="task-card" onclick="toggleTask(this, 'charlie', 18)" data-pts="18">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Wash & fold towels</div><div class="task-desc">Wash, dry, and put away</div></div>
       <div class="points-pill">18 pts</div>
     </div>
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 20)" data-pts="20">
+      <div class="check-circle"></div>
+      <div class="task-info"><div class="task-name">🚗 Vacuum car</div><div class="task-desc">Seats, floor mats, and trunk</div></div>
+      <div class="points-pill">20 pts</div>
+    </div>
   </div>
 
   <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'charlie', 15)" data-pts="15">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
-      <div class="points-pill">15 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
   <div class="book-section">
@@ -660,22 +657,22 @@
       <div style="width:100%;display:flex;align-items:center;gap:8px;margin-top:6px;">
         <span id="charlie-run-label" style="flex:1;font-size:0.82rem;color:#AAA;font-style:italic;">Select run type above</span>
         <input type="number" id="charlie-run-mins" value="30" min="0" style="width:52px;border:1.5px solid #EEE;border-radius:8px;padding:4px 8px;font-size:0.85rem;font-family:'DM Sans',sans-serif;font-weight:600;text-align:center;color:#1A1A2E;outline:none;" /> <span class="unit">min</span>
-        <div class="ex-done-check" onclick="toggleEx(this, 'charlie', 18)" data-pts="18"></div>
+        <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'charlie', 0)"></div>
       </div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">🏋️ CrossFit WOD</div>
       <input type="number" value="45" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'charlie', 18)" data-pts="18"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'charlie', 0)"></div>
     </div>
   </div>
 
   <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'charlie', 10)" data-pts="10">
+    <div class="task-card" onclick="toggleTask(this, 'charlie', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Fresh air, sunshine, move around ☀️</div></div>
-      <div class="points-pill">10 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
 
@@ -690,7 +687,7 @@
   <div class="kid-header">
     <div class="kid-info">
       <h2>Jeffrey</h2>
-      <p>Age 15 · Points this week: <strong id="jeffrey-pts">0</strong> / 200</p>
+      <p>Age 15 · Points today: <strong id="jeffrey-pts">0</strong> / 100</p>
     </div>
     <div class="earnings-box">
       <div class="label">Earned</div>
@@ -733,19 +730,19 @@
       <div class="task-info"><div class="task-name">Take out trash & recycling</div><div class="task-desc">All bins, replace liners</div></div>
       <div class="points-pill">22 pts</div>
     </div>
-    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 25)" data-pts="25">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 20)" data-pts="20">
       <div class="check-circle"></div>
-      <div class="task-info"><div class="task-name">Deep clean bathroom</div><div class="task-desc">Toilet, sink, mirror, floor</div></div>
-      <div class="points-pill">25 pts</div>
+      <div class="task-info"><div class="task-name">🪑 Wipe down outdoor furniture</div><div class="task-desc">Tables, chairs, cushions</div></div>
+      <div class="points-pill">20 pts</div>
     </div>
   </div>
 
   <div class="section-title"><span class="emoji">📚</span> Reading <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 15)" data-pts="15">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Read for 20 minutes</div><div class="task-desc">Any book you choose</div></div>
-      <div class="points-pill">15 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
   <div class="book-section">
@@ -769,37 +766,37 @@
       <div style="width:100%;display:flex;align-items:center;gap:8px;margin-top:6px;">
         <span id="jeffrey-run-label" style="flex:1;font-size:0.82rem;color:#AAA;font-style:italic;">Select run type above</span>
         <input type="number" id="jeffrey-run-mins" value="40" min="0" style="width:52px;border:1.5px solid #EEE;border-radius:8px;padding:4px 8px;font-size:0.85rem;font-family:'DM Sans',sans-serif;font-weight:600;text-align:center;color:#1A1A2E;outline:none;" /> <span class="unit">min</span>
-        <div class="ex-done-check" id="jeffrey-run-check" onclick="toggleEx(this, 'jeffrey', 18)" data-pts="18"></div>
+        <div class="ex-done-check" id="jeffrey-run-check" onclick="toggleEx(this, 'jeffrey', 0)" data-pts="18"></div>
       </div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">🏋️ CrossFit WOD</div>
       <input type="number" value="45" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 18)" data-pts="18"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'jeffrey', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">🏀 Shoot Hoops</div>
       <input type="number" value="20" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'jeffrey', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">⚾ Pitching Work</div>
       <input type="number" value="20" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'jeffrey', 0)"></div>
     </div>
     <div class="exercise-row">
       <div class="ex-name">⚾ Hitting / Tee Work</div>
       <input type="number" value="20" min="0" /> <span class="unit">min</span>
-      <div class="ex-done-check" onclick="toggleEx(this, 'jeffrey', 14)" data-pts="14"></div>
+      <div class="ex-done-check" data-pts="0" onclick="toggleEx(this, 'jeffrey', 0)"></div>
     </div>
   </div>
 
   <div class="section-title"><span class="emoji">🌳</span> Outside Time <span class="freq-badge daily">Daily</span></div>
   <div class="tasks">
-    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 10)" data-pts="10">
+    <div class="task-card" onclick="toggleTask(this, 'jeffrey', 0)" data-pts="0">
       <div class="check-circle"></div>
       <div class="task-info"><div class="task-name">Go outside today</div><div class="task-desc">Intentional time away from screens ☀️</div></div>
-      <div class="points-pill">10 pts</div>
+      <div class="points-pill" style="opacity:0.4">✓ only</div>
     </div>
   </div>
 
@@ -810,11 +807,91 @@
 </div>
 
 <script>
-  // Points totals per kid
+  // ── EARNINGS ──────────────────────────────────────────
+  // Target $5/day. Daily tasks sum to ~100 pts per kid.
+  // $5 / 100 pts = $0.05 per point.
   const pts = { claire: 0, charlie: 0, jeffrey: 0 };
-  const MAX_PTS = 200;
-  const DOLLAR_PER_PT = 20 / MAX_PTS; // $20 per 200 pts
+  const MAX_PTS = 100;           // daily max
+  const DOLLAR_PER_PT = 0.05;   // $5 at 100 pts
 
+  // ── LOCALSTORAGE HELPERS ──────────────────────────────
+  const TODAY = new Date().toDateString(); // e.g. "Tue May 26 2026"
+
+  function saveState() {
+    const state = {};
+    ['claire','charlie','jeffrey'].forEach(kid => {
+      const panel = document.getElementById('panel-' + kid);
+      const tasks = [];
+      panel.querySelectorAll('.task-card').forEach((card, i) => {
+        tasks.push(card.classList.contains('done'));
+      });
+      const exes = [];
+      panel.querySelectorAll('.ex-done-check').forEach((ex, i) => {
+        exes.push(ex.classList.contains('checked'));
+      });
+      // Books
+      const books = [];
+      panel.querySelectorAll('.book-entry').forEach(entry => {
+        books.push({ title: entry.querySelector('input').value, finished: entry.dataset.finished === 'true' });
+      });
+      state[kid] = { tasks, exes, books, pts: pts[kid] };
+    });
+    localStorage.setItem('summerHQ_' + TODAY, JSON.stringify(state));
+  }
+
+  function loadState() {
+    const raw = localStorage.getItem('summerHQ_' + TODAY);
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    ['claire','charlie','jeffrey'].forEach(kid => {
+      if (!state[kid]) return;
+      const panel = document.getElementById('panel-' + kid);
+      const s = state[kid];
+
+      // Restore task cards
+      panel.querySelectorAll('.task-card').forEach((card, i) => {
+        if (s.tasks[i]) card.classList.add('done');
+      });
+
+      // Restore exercise checks
+      panel.querySelectorAll('.ex-done-check').forEach((ex, i) => {
+        if (s.exes[i]) ex.classList.add('checked');
+      });
+
+      // Restore books
+      if (s.books && s.books.length) {
+        const log = document.getElementById(kid + '-books');
+        // Fill first entry, add extras
+        s.books.forEach((b, i) => {
+          let entry = log.querySelectorAll('.book-entry')[i];
+          if (!entry) {
+            entry = document.createElement('div');
+            entry.className = 'book-entry';
+            entry.dataset.finished = 'false';
+            entry.innerHTML = `<span>📖</span><input type="text" placeholder="Book title…" /><button class="book-done-btn" onclick="finishBook(this, '${kid}')">Finished! +$20</button>`;
+            log.appendChild(entry);
+          }
+          entry.querySelector('input').value = b.title;
+          if (b.finished) {
+            entry.dataset.finished = 'true';
+            entry.classList.add('finished');
+            entry.querySelector('.book-done-btn').textContent = '✓ +$20 earned!';
+            if (!entry.querySelector('.book-bonus')) {
+              const bonusEl = document.createElement('span');
+              bonusEl.className = 'book-bonus';
+              bonusEl.textContent = '+$20 📗';
+              entry.appendChild(bonusEl);
+            }
+          }
+        });
+      }
+
+      pts[kid] = s.pts || 0;
+      updateStats(kid);
+    });
+  }
+
+  // ── UI UPDATES ────────────────────────────────────────
   function updateStats(kid) {
     const p = pts[kid];
     document.getElementById(kid + '-pts').textContent = p;
@@ -831,6 +908,7 @@
     pts[kid] += wasDone ? -pointVal : pointVal;
     if (pts[kid] < 0) pts[kid] = 0;
     updateStats(kid);
+    saveState();
   }
 
   function toggleEx(el, kid, pointVal) {
@@ -839,6 +917,7 @@
     pts[kid] += wasDone ? -pointVal : pointVal;
     if (pts[kid] < 0) pts[kid] = 0;
     updateStats(kid);
+    saveState();
   }
 
   function finishBook(btn, kid) {
@@ -849,11 +928,11 @@
     entry.dataset.finished = 'true';
     entry.classList.add('finished');
     btn.textContent = '✓ +$20 earned!';
-    // Book bonus is separate from points
     const bonusEl = document.createElement('span');
     bonusEl.className = 'book-bonus';
     bonusEl.textContent = '+$20 📗';
     entry.appendChild(bonusEl);
+    saveState();
   }
 
   function addBookEntry(kid) {
@@ -863,6 +942,8 @@
     entry.dataset.finished = 'false';
     entry.innerHTML = `<span>📖</span><input type="text" placeholder="Book title…" /><button class="book-done-btn" onclick="finishBook(this, '${kid}')">Finished! +$20</button>`;
     log.appendChild(entry);
+    // Save when title is typed
+    entry.querySelector('input').addEventListener('input', saveState);
   }
 
   function showKid(kid) {
@@ -875,22 +956,20 @@
   function resetKid(kid) {
     if (!confirm('Reset all of ' + kid.charAt(0).toUpperCase() + kid.slice(1) + "'s daily tasks?")) return;
     const panel = document.getElementById('panel-' + kid);
-    panel.querySelectorAll('.task-card.done').forEach(c => {
-      c.classList.remove('done');
-    });
-    panel.querySelectorAll('.ex-done-check.checked').forEach(c => {
-      c.classList.remove('checked');
-    });
+    panel.querySelectorAll('.task-card.done').forEach(c => c.classList.remove('done'));
+    panel.querySelectorAll('.ex-done-check.checked').forEach(c => c.classList.remove('checked'));
     pts[kid] = 0;
     updateStats(kid);
+    saveState();
   }
 
-  // Run type selectors
+  // ── RUN TYPE SELECTORS ────────────────────────────────
   function charlieRunType(radio) {
     const labels = { speed: '⚡ Speed Work — intervals, strides', long: '🛣️ Long Run — steady pace', recovery: '🌿 Recovery — easy, conversational pace' };
     document.getElementById('charlie-run-label').textContent = labels[radio.value] || '';
     const mins = { speed: 30, long: 50, recovery: 30 };
     document.getElementById('charlie-run-mins').value = mins[radio.value];
+    saveState();
   }
   function jeffreyRunType(radio) {
     const labels = { long: '🛣️ Long Run — steady pace', speed: '⚡ Speed Work — intervals, tempo', rest: '🚫 Rest Day — skip the run today' };
@@ -898,9 +977,10 @@
     const mins = { long: 50, speed: 35, rest: 0 };
     document.getElementById('jeffrey-run-mins').value = mins[radio.value];
     document.getElementById('jeffrey-run-check').style.opacity = radio.value === 'rest' ? '0.3' : '1';
+    saveState();
   }
 
-  // Date display
+  // ── DATE DISPLAY ──────────────────────────────────────
   (function() {
     const now = new Date();
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -908,6 +988,15 @@
     document.getElementById('dayName').textContent = days[now.getDay()];
     document.getElementById('dateStr').textContent = months[now.getMonth()] + ' ' + now.getDate();
   })();
+
+  // ── INIT ──────────────────────────────────────────────
+  // Attach input listeners for existing book entries
+  document.querySelectorAll('.book-entry input').forEach(inp => {
+    inp.addEventListener('input', saveState);
+  });
+
+  // Load saved state on page open
+  loadState();
 </script>
 </body>
 </html>
